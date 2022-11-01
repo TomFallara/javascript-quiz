@@ -12,12 +12,13 @@ var buttonD = document.querySelector("#d");
 var chosenAnswer = "";
 var questionEl = document.querySelector("#question");;
 var passFail = document.querySelector('#passFail');
-var finalScore = document.querySelector(".grade-card");
-var scoreReveal = document.getElementById('score-bar')
+var finalScoreEl = document.querySelector(".grade-card");
+var submitButtonEl = document.querySelector('#submitButton');
+var scoreReveal = document.getElementById('score-bar');
 
 //hide elements that aren't needed at start
-finalScore.setAttribute("style", "visibility: hidden")
-quizCardEl.setAttribute("style", "visibility: hidden");
+finalScoreEl.setAttribute("style", "display: none")
+quizCardEl.setAttribute("style", "display: none");
 
 //Timer niceities
 var timerElement = document.querySelector(".timer-count")
@@ -91,7 +92,6 @@ var question7 = {
 var x = 0
 
 questionArray = [question1, question2, question3, question4, question5, question6, question7]
-console.log(questionArray[0])
 
 //Timer
 var startTimer = function () {
@@ -105,7 +105,7 @@ var startTimer = function () {
             }
         }
 
-        if (timerCount === 0) {
+        if (timerCount <= 0) {
             clearInterval(timer);
             endQuiz()
         }
@@ -114,48 +114,6 @@ var startTimer = function () {
 }
 
 //Quiz proper
-
-//Question content updating function
-function fillQuestion(num) {
-    questionEl.textContent = questionArray[num].text;
-    buttonA.textContent = questionArray[num].answerA;
-    buttonB.textContent = questionArray[num].answerB;
-    buttonC.textContent = questionArray[num].answerC;
-    buttonD.textContent = questionArray[num].answerD;
-}
-//End Quiz
-  var endQuiz = function() {
-       quizCardEl.setAttribute("style", "visibility: hidden");
-       finalScore.setAttribute("style", "visibility: visible");
-       scoreReveal.textContent = "Your score was " + score + "/7";
-    }    
-
-//Select Answer
-function selectAnswer(event) {
-    chosenAnswer = event.target.id
-    if (chosenAnswer === questionArray[x].correctAnswer) {
-        score++;
-        console.log(score);
-        passFail.innerHTML = "correct";
-        x++;
-    }
-    
-    else {
-        timerCount -= 7;
-        passFail.innerHTML = "wrong";
-        x++;
-    }
-    
-    if (x > questionArray.length-1) {
-        isDone= true;
-        endQuiz();
-    }
-    
-    else {
-        fillQuestion(x)
-    }
-
-}
 
 //Quiz start
 var startQuiz = function () {
@@ -166,6 +124,56 @@ var startQuiz = function () {
     fillQuestion(x);
 }
 
+//Question content updating function
+function fillQuestion(num) {
+    questionEl.textContent = questionArray[num].text;
+    buttonA.textContent = questionArray[num].answerA;
+    buttonB.textContent = questionArray[num].answerB;
+    buttonC.textContent = questionArray[num].answerC;
+    buttonD.textContent = questionArray[num].answerD;
+}
+//End Quiz
+var endQuiz = function () {
+    quizCardEl.setAttribute("style", "display: none");
+    finalScoreEl.setAttribute("style", "visibility: visible");
+    scoreReveal.textContent = "Your score was " + score + "/7";
+}
+//log both the score and the intials given to local storage
+function logAnswer(event) {
+    event.preventDefault();
+    localStorage.setItem('studentGrade', score)
+    var userInputInitials = document.querySelector('#initials').value;
+    localStorage.setItem('studentName', userInputInitials)
+}
+
+//Select Answer
+function selectAnswer(event) {
+    chosenAnswer = event.target.id
+    if (chosenAnswer === questionArray[x].correctAnswer) {
+        score++;
+        console.log(score);
+        passFail.innerHTML = "correct";
+        x++;
+    }
+
+    else {
+        timerCount -= 7;
+        passFail.innerHTML = "wrong. " + questionArray[x].correctAnswer;
+        x++;
+    }
+
+    if (x > questionArray.length - 1) {
+        isDone = true;
+        endQuiz();
+    }
+
+    else {
+        fillQuestion(x)
+    }
+
+}
+
+
 
 
 //On-click event listeners
@@ -174,3 +182,4 @@ buttonA.addEventListener("click", selectAnswer)
 buttonB.addEventListener("click", selectAnswer)
 buttonC.addEventListener("click", selectAnswer)
 buttonD.addEventListener("click", selectAnswer)
+submitButtonEl.addEventListener("click", logAnswer)
