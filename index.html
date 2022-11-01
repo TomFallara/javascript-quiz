@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,19 +22,31 @@
     </div>
 
     <!-- quiz happens in here -->
-    <div class = "Quiz card">
-        <h2>question here</h2>
+    <div class = "quiz-card">
+        <h2 id="question">question here</h2>
 
-        <button>a. some text</button>
+        <button id="a">a. some text</button>
 
-        <button>b. some text</button>
+        <button id="b">b. some text</button>
 
-        <button>c. some text</button>
+        <button id="c">c. some text</button>
 
-        <button>d. some text</button>
+        <button id="d">d. some text</button>
         
+        <p id="passFail"></p>
     </div>
-<!-- display the score below? -->
+
+    <!-- scorecard here -->
+    <div class = "grade-card">
+        <h2>Your Grade</h2>
+        <h3 id="score-bar"> Your score </h3>
+        <form>
+            <label for="initials">Inital here</label>
+            <input type="text" id="intials" name="initals" value="initials">
+            <input type="submit" value="submit">
+        </form>
+
+    </div>
 <script src = "assests/js/script.js"></script>
 </body>
 </html>
