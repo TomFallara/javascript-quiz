@@ -23,4 +23,4 @@ N/A
 
 ## License
 
-See lisence in repo
+See license in repo
