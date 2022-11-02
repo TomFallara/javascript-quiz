@@ -9,7 +9,9 @@ Building this was about learning how to use javascript logic and familiarize mys
 
 ## Installation
 
-N/A runs in browser
+N/A runs in browser. link below
+
+https://tomfallara.github.io/javascript-quiz/
 
 ## Usage
 
